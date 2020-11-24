@@ -1,0 +1,147 @@
+<mat-card>
+    <h2>Agregar nuevo cliente</h2>
+    <mat-divider></mat-divider>
+
+    <form class="example-form" [formGroup]="form">
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="firstName">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Apellido</mat-label>
+                        <input matInput formControlName="lastName">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 60px;">
+                        <mat-label>Tipo documento</mat-label>
+                        <input matInput formControlName="docType" maxlength="2">
+                    </mat-form-field>              
+                </td>
+                <td>
+                    <mat-form-field style="width: 120px;">
+                        <mat-label>No. Documento</mat-label>
+                        <input matInput formControlName="docId">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 240px;">
+                        <mat-label>Correo electrónico</mat-label>
+                        <input matInput formControlName="email">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 120px;">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput formControlName="phone">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 60px;">
+                        <mat-label>Edad</mat-label>
+                        <input matInput formControlName="age" maxlength="3" type="number">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button mat-raised-button color="primary" (click)="saveCustomer()"><mat-icon>save</mat-icon> {{textButton}}</button>
+                </td>
+                <td>
+                    <button mat-raised-button (click)="cancel()"><mat-icon>save</mat-icon>Cancelar</button>
+                </td>
+            </tr>
+        </table>
+      </form>
+
+</mat-card>
+
+<mat-card>
+    <h2>Clientes</h2>
+    <mat-divider></mat-divider>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="docType">
+          <th mat-header-cell *matHeaderCellDef style="max-width: 60px;"> Tipo Doc. </th>
+          <td mat-cell *matCellDef="let element"> {{element.docType}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="docId">
+          <th mat-header-cell *matHeaderCellDef> Documento </th>
+          <td mat-cell *matCellDef="let element"> {{element.docId}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef> Apellido </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Correo electrónico </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+            <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="age">
+            <th mat-header-cell *matHeaderCellDef> Edad </th>
+            <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+        </ng-container>
+        
+        
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button (click)="editCustomer(element)"><mat-icon>edit</mat-icon></button>
+            </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button (click)="deleteCustomer(element)"><mat-icon>delete</mat-icon></button>
+            </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="viewCreditCards">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button  (click)="seeCreditCards()"><mat-icon>credit_card</mat-icon> Ver tarjetas de crédito</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      
+      
+</mat-card>
+

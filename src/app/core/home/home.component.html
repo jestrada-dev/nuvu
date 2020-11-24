@@ -1,0 +1,18 @@
+<p>
+    <mat-toolbar color="primary">
+      <span>Clientes Nuvu</span>
+      <span class="example-spacer"></span>
+      <div *ngIf="isLogged">
+        <span>Usuario conectado: {{ globalService.user.userName }}</span>
+        <a mat-button class="button-bar" (click)="signOut()">Cerrar sesión <mat-icon>power_settings_new</mat-icon></a>
+      </div>
+    </mat-toolbar>
+</p>
+
+<div *ngIf="isLogged; else isNotLogged">
+  <app-customers></app-customers>
+</div>
+
+<ng-template #isNotLogged>
+  <app-login (login)="authenticated($event)"></app-login>
+</ng-template>

@@ -1,0 +1,22 @@
+<div style="display: flex; justify-content: center;">
+    <mat-card>
+        <h2>Inicio de sesión</h2>
+        <mat-divider></mat-divider>
+    
+        <div style="margin-top: 30px;">
+            <form class="example-form" [formGroup]="form">
+                <mat-form-field>
+                    <input type="text" formControlName="userName" matInput placeholder="Nombre de usuario">
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                    <input type="password" formControlName="password" matInput placeholder="Contraseña">
+                </mat-form-field>
+                <br>
+                <button mat-raised-button color="primary" (click)="signIn()">Entrar</button>
+            </form>
+        </div>
+
+    
+    </mat-card>
+</div>
