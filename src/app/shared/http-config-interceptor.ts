@@ -22,13 +22,11 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         let request = req;
 
         if (token) {
-            console.log('token', token);
             request = req.clone({
                 setHeaders: {
                     Authorization: token
                 }
             });
-            console.log('request', request);
         }
 
         return next.handle(request).pipe(

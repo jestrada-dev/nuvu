@@ -41,13 +41,11 @@ export class LoginComponent implements OnInit {
       user.password = password;
 
       this.userService.login(user).subscribe( resp => {
-        console.log('Login ok', resp);
         if (resp.success) {
 
           this.login.emit(resp.data);
         }
       }, error => {
-        console.log('Login', error);
         this.openSnackBar(error.error.message, null);
       });
     } else {

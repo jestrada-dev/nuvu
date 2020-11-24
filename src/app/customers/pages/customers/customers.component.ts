@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatDrawer } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerDto } from '../../models/customer.dto';
 import { CustomerService } from '../../services/customer.service';
+import { CreditCardsComponent } from '../credit-cards/credit-cards.component';
 
 @Component({
   selector: 'app-customers',
@@ -18,6 +20,10 @@ export class CustomersComponent implements OnInit {
 
   id: number;
   textButton = 'Guardar';
+  textTitle = 'Agregar nuevo cliente';
+
+  @ViewChild('drawer', { static: false }) drawer: MatDrawer;
+  @ViewChild('creditCardComp', { static: false }) creditCardComp: CreditCardsComponent;
 
   constructor(
     private customerService: CustomerService,
@@ -44,13 +50,11 @@ export class CustomersComponent implements OnInit {
 
   getCustomers() {
     this.customerService.get().subscribe( resp => {
-      console.log('Customers', resp);
       if (resp.success) {
         this.dataSource = resp.data;
       }
     }, error => {
       this.openSnackBar(error.error.message, null);
-      console.log('Customers', error);
     });
   }
 
@@ -80,22 +84,20 @@ export class CustomersComponent implements OnInit {
       customer.phone = this.form.controls['phone'].value;
       customer.age = this.form.controls['age'].value;
 
-      console.log('creando customer', customer);
       this.customerService.save(customer).subscribe( resp => {
-        console.log('Add new Customer', resp);
         if (resp.success) {
           this.cancel();
           this.getCustomers();
         }
       }, error => {
         this.openSnackBar(error.error.message, null);
-        console.log('Add new Customer', error);
       });
     }
   }
 
   editCustomer(customer: CustomerDto) {
     this.textButton = 'Actualizar';
+    this.textTitle = 'Modificar cliente';
     this.id = customer.id;
     this.form.controls['firstName'].setValue(customer.firstName);
     this.form.controls['lastName'].setValue(customer.lastName);
@@ -110,29 +112,26 @@ export class CustomersComponent implements OnInit {
     this.id = null;
     this.form.reset();
     this.textButton = 'Guardar';
+    this.textButton = 'Agregar nuevo cliente';
   }
 
   updateCustomer(customer: CustomerDto) {
     this.customerService.update(customer).subscribe( resp => {
-      console.log('Update Customer', resp);
       if (resp.success) {
         this.getCustomers();
       }
     }, error => {
       this.openSnackBar(error.error.message, null);
-      console.log('Update Customer', error);
     });
   }
 
   deleteCustomer(customer: CustomerDto) {
     this.customerService.delete(customer.id).subscribe( resp => {
-      console.log('Delete Customer', resp);
       if (resp.success) {
         this.getCustomers();
       }
     }, error => {
       this.openSnackBar(error.error.message, null);
-      console.log('Delete Customer', error);
     });
   }
 
@@ -140,6 +139,16 @@ export class CustomersComponent implements OnInit {
     this._snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  showCreditCards(customer: CustomerDto) {
+    this.creditCardComp.setCustomer(customer);
+    this.drawer.open();
+  }
+
+  closeCreditCards() {
+    this.drawer.close();
+    this.getCustomers();
   }
 
 }

@@ -20,6 +20,10 @@ import { CreditCardDto } from '../models/credit-card.dto';
         return this.http.get<GeneralResponse<CreditCardDto[]>>(this.url);
     }
 
+    getByCustomerId(customerId: number): Observable<GeneralResponse<CreditCardDto[]>> {
+        return this.http.get<GeneralResponse<CreditCardDto[]>>(this.url + '/customer-id/' + customerId);
+    }
+
     save(creditCard: CreditCardDto): Observable<GeneralResponse<CreditCardDto>> {
         return this.http.post<GeneralResponse<CreditCardDto>>(this.url, creditCard);
     }

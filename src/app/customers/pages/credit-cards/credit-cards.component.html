@@ -1,1 +1,93 @@
-<p>credit-cards works!</p>
+
+    <div style="display: flex; position: absolute; left: 90%;">
+        <button mat-raised-button (click)="closeScreen()"><mat-icon>close</mat-icon></button>
+    </div>
+    <h2> Cliente {{ customer.docId }} - {{ customer.firstName }} {{ customer.lastName }}</h2>
+
+<mat-card>
+        <h2> {{ textTitle }} </h2>
+        <mat-divider></mat-divider>
+    <form class="example-form" [formGroup]="form">
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Número</mat-label>
+                        <input matInput formControlName="number" maxlength="16">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 80px;">
+                        <mat-label>Fecha de expiración</mat-label>
+                        <input matInput formControlName="expire" maxlength="4">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 240px;">
+                        <mat-label>Nombre en la tarjeta</mat-label>
+                        <input matInput formControlName="printName">
+                    </mat-form-field>              
+                </td>
+                <td>
+                    <mat-form-field style="width: 60px;">
+                        <mat-label>Código de seguridad</mat-label>
+                        <input matInput formControlName="cvc" maxlength="3">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="saveCreditCard()"><mat-icon>save</mat-icon> {{textButton}}</button>
+                </td>
+                <td>
+                    <button mat-raised-button (click)="cancel()"><mat-icon>save</mat-icon>Cancelar</button>
+                </td>
+            </tr>
+        </table>
+      </form>
+
+</mat-card>
+
+<mat-card>
+    <h2>Tarjetas de crédito</h2>
+    <mat-divider></mat-divider>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+        <ng-container matColumnDef="number">
+          <th mat-header-cell *matHeaderCellDef> Número de la Tarjeta </th>
+          <td mat-cell *matCellDef="let element"> ****{{element.number.substring(12,16)}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="expire">
+          <th mat-header-cell *matHeaderCellDef style="max-width: 60px;"> Fecha de expiración </th>
+          <td mat-cell *matCellDef="let element"> {{element.expire}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="printName">
+          <th mat-header-cell *matHeaderCellDef> Nombre en la tarjeta </th>
+          <td mat-cell *matCellDef="let element"> {{element.printName}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="cvc">
+          <th mat-header-cell *matHeaderCellDef> Código de seguridad </th>
+          <td mat-cell *matCellDef="let element"> {{element.cvc}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button matTooltip="Modificar tarjeta de crédito" mat-raised-button (click)="editCreditCard(element)"><mat-icon>edit</mat-icon></button>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button matTooltip="Eliminar tarjeta de crédito" mat-raised-button (click)="deleteCreditCard(element)"><mat-icon>delete</mat-icon></button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      
+</mat-card>

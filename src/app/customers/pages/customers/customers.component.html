@@ -1,5 +1,5 @@
 <mat-card>
-    <h2>Agregar nuevo cliente</h2>
+    <h2>{{textTitle}}</h2>
     <mat-divider></mat-divider>
 
     <form class="example-form" [formGroup]="form">
@@ -65,76 +65,64 @@
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       
-        <!-- Position Column -->
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> Id </th>
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
       
-        <!-- Name Column -->
         <ng-container matColumnDef="docType">
           <th mat-header-cell *matHeaderCellDef style="max-width: 60px;"> Tipo Doc. </th>
           <td mat-cell *matCellDef="let element"> {{element.docType}} </td>
         </ng-container>
       
-        <!-- Weight Column -->
         <ng-container matColumnDef="docId">
           <th mat-header-cell *matHeaderCellDef> Documento </th>
           <td mat-cell *matCellDef="let element"> {{element.docId}} </td>
         </ng-container>
       
-        <!-- Symbol Column -->
         <ng-container matColumnDef="firstName">
           <th mat-header-cell *matHeaderCellDef> Nombre </th>
           <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
         </ng-container>
       
-        <!-- Symbol Column -->
         <ng-container matColumnDef="lastName">
             <th mat-header-cell *matHeaderCellDef> Apellido </th>
             <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef> Correo electrónico </th>
             <td mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="phone">
             <th mat-header-cell *matHeaderCellDef> Teléfono </th>
             <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="age">
             <th mat-header-cell *matHeaderCellDef> Edad </th>
             <td mat-cell *matCellDef="let element"> {{element.age}} </td>
         </ng-container>
-        
-        
-        <!-- Symbol Column -->
+
         <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-                <button mat-raised-button (click)="editCustomer(element)"><mat-icon>edit</mat-icon></button>
+                <button matTooltip="Modificar cliente" mat-raised-button (click)="editCustomer(element)"><mat-icon>edit</mat-icon></button>
             </td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="delete">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-                <button mat-raised-button (click)="deleteCustomer(element)"><mat-icon>delete</mat-icon></button>
+                <button matTooltip="Eliminar cliente" mat-raised-button (click)="deleteCustomer(element)"><mat-icon>delete</mat-icon></button>
             </td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="viewCreditCards">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-                <button mat-raised-button  (click)="seeCreditCards()"><mat-icon>credit_card</mat-icon> Ver tarjetas de crédito</button>
+                <button mat-raised-button  (click)="showCreditCards(element)"><mat-icon>credit_card</mat-icon> Ver tarjetas de crédito</button>
             </td>
         </ng-container>
 
@@ -142,6 +130,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
       
-      
 </mat-card>
 
+<mat-drawer #drawer class="example-sidenav" mode="side">
+    <app-credit-cards #creditCardComp (closeCreditCard)="closeCreditCards()"></app-credit-cards>
+</mat-drawer>
